@@ -3,7 +3,8 @@
 from flask import Flask
 from flask import render_template
 from flask import request
-from model import inDataBase
+from flask import redirect, session, url_for
+# from bson.objectid import ObjectId
 from flask_pymongo import PyMongo
 import model
 
@@ -48,26 +49,34 @@ def signUp():
         user_email = request.form["user_email"]
         user_password = request.form["psw"]
         user_password_repeat = request.form["psw-repeat"]
-        ##Connecting to database and adding new user to database
+        ##Checking if the email is already registered and connecting to database
         collection = mongo.db.user_info
-        # collection.insert({"user_email":"james", "user_password": 'user_password', "user_interest": 'user_interest', "user_education": 'user_education', "user_headline": 'user_headline', "user_password_repeat": 'user_password_repeat'})
-        collection.insert({"user_email":user_email, "user_password": user_password, "user_interest": user_interest, "user_education": user_education, "user_headline": user_headline, "user_password_repeat":user_password_repeat})
-    # return render_template('signUp.html')
-    # CONNECT TO DB, ADD DATA
-        return("Done")
+        existing_user = collection.find_one({'user_email' : user_email})
+        if existing_user is None: 
+            #Checking that user entered same password
+            if not (user_password == user_password_repeat): 
+                return ("You entered different passwords, please try again!")
+            #Adding new user to database
+            collection.insert({"user_email":user_email, "user_password": user_password, "user_interest": user_interest, "user_education": user_education, "user_headline": user_headline, "user_password_repeat":user_password_repeat})
+            return redirect(url_for('homePage'))
+        return 'That email already exists! Try logging in.'
+    return render_template('signup.html')
 
-@app.route('/signIn', methods= ["GET", "POST"])
+@app.route('/signIn', methods= ["POST"])
 def signIn():
-    if request.method == "GET":
-        return render_template('signIn.html')
-    else:
+
         user_email = request.form["user_email"] 
         user_password = request.form["password"]
         ##Connecting to database
-        collection = mongo.db.user_info        
-        confirm_info = model.inDataBase(user_email, user_password, collection) #render_template('signIn.html', user_email = user_email, user_password=user_password)
+        collection = mongo.db.user_info      
+        # checks to see if the info user provided is in the data base 
+        login_user = users.find_one({'user_email' : user_email}) 
+        if login_user: 
+            if user_password == login_user['password']:
+                return "Logged in!"
+        return 'Invalid combination!'
 
-        # checks to see if the info user provided is in the data base, returns a bollean
+        
         if(confirm_Info): 
             return "Success!"
         else: 
