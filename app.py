@@ -26,6 +26,10 @@ mongo = PyMongo(app)
 # def index():
 #     return render_template('index.html', events = events)
 
+@app.route('/welcomePage', methods= ["GET", "POST"])
+def welcomePage():
+    return render_template('welcomePage.html')
+
 @app.route('/homePage', methods= ["GET", "POST"])
 def homePage():
     return render_template('homePage.html')
@@ -34,12 +38,23 @@ def homePage():
 def signUp():
     # add mongo db stuff so that it adds user information when they sign up
     # users>> user, user_password, userbirthday etc
-    if request.method == "POST":
-        print(request.form)
+    if request.method == "GET":
+        return render_template('signUp.html')
+    else:
+        user_name = request.form["user_name"]
+        user_interest = request.form["user_interest"]
+        user_education = request.form["user_education"]
+        user_headline = request.form["user_headline"]
         user_email = request.form["user_email"]
-        user_password = request.form["password"]
-    return render_template('signUp.html', )
-# CONNECT TO DB, ADD DATA
+        user_password = request.form["psw"]
+        user_password_repeat = request.form["psw-repeat"]
+        ##Connecting to database and adding new user to database
+        collection = mongo.db.user_info
+        # collection.insert({"user_email":"james", "user_password": 'user_password', "user_interest": 'user_interest', "user_education": 'user_education', "user_headline": 'user_headline', "user_password_repeat": 'user_password_repeat'})
+        collection.insert({"user_email":user_email, "user_password": user_password, "user_interest": user_interest, "user_education": user_education, "user_headline": user_headline, "user_password_repeat":user_password_repeat})
+    # return render_template('signUp.html')
+    # CONNECT TO DB, ADD DATA
+        return("Done")
 
 @app.route('/signIn', methods= ["GET", "POST"])
 def signIn():
@@ -72,7 +87,7 @@ def signIn():
 def add():
     # connect to the database
     collection = mongo.db.user_info
-    collection.insert({"user_email":"james@gmail.com", "user_password": "password"})
+    collection.insert({"user_email":"james2@gmail.com", "user_password": "password"})
     # insert new data
     # return a message to the user
     return "Done!"
