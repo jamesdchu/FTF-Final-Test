@@ -5,7 +5,7 @@ from flask import render_template
 from flask import request
 from model import inDataBase
 from flask_pymongo import PyMongo
-
+import model
 
 # -- Initialization section --
 app = Flask(__name__)
@@ -53,16 +53,13 @@ def signIn():
         user_password = request.form["password"]
         ##Connecting to database
         collection = mongo.db.user_info        
-
-
-        confirm_info = inDataBase(user_email, user_password, collection)
-        return render_template('signIn.html', user_email = user_email, user_password=user_password)
+        confirm_info = model.inDataBase(user_email, user_password, collection) #render_template('signIn.html', user_email = user_email, user_password=user_password)
 
         # checks to see if the info user provided is in the data base, returns a bollean
-        # if(confirm_Info): 
-        #     return("Success!")
-        # else: 
-        #     return("FAiL!")
+        if(confirm_Info): 
+            return "Success!"
+        else: 
+            return"FAiL!"
         #     # need to code for in database
 
         # return render_template('signIn.html')# user_email = user_email, user_password=user_password)
@@ -86,3 +83,20 @@ def add():
 
 # @app.route('/signUp', methods = ["GET", "POST"])
 # def signUp():
+
+@app.route('/homePage', methods= ["GET", "POST"])
+def homePage():
+    return render_template('homePage.html')
+
+@app.route('/discussionPage', methods= ["GET", "POST"])
+def homePage():
+    return render_template('discussionPage.html')
+
+@app.route('/resourcesPage', methods= ["GET", "POST"])
+def homePage():
+    return render_template('resourcesPage.html')
+'''
+@app.route('/homePage', methods= ["GET", "POST"])
+def homePage():
+    return render_template('homePage.html')
+'''

@@ -1,6 +1,7 @@
 def inDataBase(email, password, users):
     #users is database
-    if (email in users) and (password == users['email']['password']):
-        return True
-    else:
-        return False
+    inDataBase = False
+    for user in users: 
+        if (email==user["email"] and password==user["password"]):
+            inDataBase = True
+    return inDataBase
