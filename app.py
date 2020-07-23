@@ -62,9 +62,11 @@ def signUp():
         return 'That email already exists! Try logging in.'
     return render_template('signup.html')
 
-@app.route('/signIn', methods= ["POST"])
+@app.route('/signIn', methods= ["GET", "POST"])
 def signIn():
-
+    if request.method=="GET":
+        return render_template('signIn.html')
+    else:
         user_email = request.form["user_email"] 
         user_password = request.form["password"]
         ##Connecting to database
@@ -75,21 +77,6 @@ def signIn():
             if user_password == login_user['password']:
                 return "Logged in!"
         return 'Invalid combination!'
-
-        
-        if(confirm_Info): 
-            return "Success!"
-        else: 
-            return"FAiL!"
-        #     # need to code for in database
-
-        # return render_template('signIn.html')# user_email = user_email, user_password=user_password)
-        # else:
-        # return ("Please re-enter your infomation")
-        
-    # else:
-    #     return "Error"
-# CONNECT TO DB, ADD DATA
 
 @app.route('/add')
 
