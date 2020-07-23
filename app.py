@@ -88,12 +88,12 @@ def add():
 def homePage():
     return render_template('homePage.html')
 
-@app.route('/discussionPage', methods= ["GET", "POST"])
-def homePage():
+@app.route('/discussionPage')#, methods= ["GET", "POST"])
+def discussionPage():
     return render_template('discussionPage.html')
 
 @app.route('/resourcesPage', methods= ["GET", "POST"])
-def homePage():
+def resourcesPage():
     return render_template('resourcesPage.html')
 '''
 @app.route('/homePage', methods= ["GET", "POST"])
