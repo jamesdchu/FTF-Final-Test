@@ -95,8 +95,8 @@ def discussionPage():
 @app.route('/resourcesPage', methods= ["GET", "POST"])
 def resourcesPage():
     return render_template('resourcesPage.html')
-'''
-@app.route('/homePage', methods= ["GET", "POST"])
-def homePage():
-    return render_template('homePage.html')
-'''
+
+@app.route('/profilePage', methods= ["GET", "POST"])
+def profilePage():
+    return render_template('profilePage.html')
+
