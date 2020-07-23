@@ -1,6 +1,6 @@
-def inDataBase(user, password):
+def inDataBase(email, password, users):
     #users is database
-    if (user in users) and (password == users['user']['password']):
+    if (email in users) and (password == users['email']['password']):
         return True
     else:
         return False

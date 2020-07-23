@@ -4,7 +4,7 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from model import inDataBase
-# from flask_pymongo import PyMongo
+from flask_pymongo import PyMongo
 
 
 # -- Initialization section --
@@ -17,12 +17,12 @@ events = [
     ]
 
 # name of database
-# app.config['MONGO_DBNAME'] = 'database-name'
+app.config['MONGO_DBNAME'] = 'users'
 
 # URI of database
-# app.config['MONGO_URI'] = 'mongo-uri'
+app.config['MONGO_URI'] = 'mongodb+srv://admin:8pcd0XmbvbLDNpCf@cluster0.6gvi8.mongodb.net/users?retryWrites=true&w=majority'
 
-# mongo = PyMongo(app)
+mongo = PyMongo(app)
 
 # -- Routes section --
 # INDEX
@@ -46,27 +46,43 @@ def signUp():
 
 @app.route('/signIn', methods= ["GET", "POST"])
 def signIn():
-    if request.method == "POST":
-        print(request.form)
-        user_email = request.form["email"]
-        user_password = request.form["password"]
-        confirm_info = inDataBase(user_email, user_password)
-        # checks to see if the info user provided is in the data base, returns a bollean
-        if(confirm_Info): 
-            # need to code for in database
-            return render_template('home.html', user_email = user_email, user_password=user_password)
-        else:
-            return ("Please re-enter your infomation")
+    if request.method == "GET":
+        return render_template('signIn.html')
     else:
-        return "Error"
+        user_email = request.form["user_email"] 
+        user_password = request.form["password"]
+        ##Connecting to database
+        collection = mongo.db.user_info        
+
+
+        confirm_info = inDataBase(user_email, user_password, collection)
+        return render_template('signIn.html', user_email = user_email, user_password=user_password)
+
+        # checks to see if the info user provided is in the data base, returns a bollean
+        # if(confirm_Info): 
+        #     return("Success!")
+        # else: 
+        #     return("FAiL!")
+        #     # need to code for in database
+
+        # return render_template('signIn.html')# user_email = user_email, user_password=user_password)
+        # else:
+        # return ("Please re-enter your infomation")
+        
+    # else:
+    #     return "Error"
 # CONNECT TO DB, ADD DATA
 
 @app.route('/add')
 
 def add():
     # connect to the database
-
+    collection = mongo.db.user_info
+    collection.insert({"user_email":"james@gmail.com", "user_password": "password"})
     # insert new data
-
     # return a message to the user
-    return ""
+    return "Done!"
+
+
+# @app.route('/signUp', methods = ["GET", "POST"])
+# def signUp():
