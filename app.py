@@ -10,12 +10,6 @@ import model
 # -- Initialization section --
 app = Flask(__name__)
 
-events = [
-        {"event":"First Day of Classes", "date":"2019-08-21"},
-        {"event":"Winter Break", "date":"2019-12-20"},
-        {"event":"Finals Begin", "date":"2019-12-01"}
-    ]
-
 # name of database
 app.config['MONGO_DBNAME'] = 'users'
 
@@ -28,10 +22,13 @@ mongo = PyMongo(app)
 # INDEX
 
 @app.route('/')
-@app.route('/index')
+# @app.route('/index')
+# def index():
+#     return render_template('index.html', events = events)
 
-def index():
-    return render_template('index.html', events = events)
+@app.route('/homePage', methods= ["GET", "POST"])
+def homePage():
+    return render_template('homePage.html')
 
 @app.route('/signUp', methods= ["GET", "POST"])
 def signUp():
@@ -83,10 +80,6 @@ def add():
 
 # @app.route('/signUp', methods = ["GET", "POST"])
 # def signUp():
-
-@app.route('/homePage', methods= ["GET", "POST"])
-def homePage():
-    return render_template('homePage.html')
 
 @app.route('/discussionPage')#, methods= ["GET", "POST"])
 def discussionPage():
