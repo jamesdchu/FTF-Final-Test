@@ -35,6 +35,12 @@ def index():
 
 @app.route('/signUp', methods= ["GET", "POST"])
 def signUp():
+    # add mongo db stuff so that it adds user information when they sign up
+    # users>> user, user_password, userbirthday etc
+    if request.method == "POST":
+        print(request.form)
+        user_email = request.form["user_email"]
+        user_password = request.form["password"]
     return render_template('signUp.html', )
 # CONNECT TO DB, ADD DATA
 
@@ -42,13 +48,13 @@ def signUp():
 def signIn():
     if request.method == "POST":
         print(request.form)
-        user_name = request.form["username"]
+        user_email = request.form["email"]
         user_password = request.form["password"]
-        confirm_info = inDataBase(user_name, user_password)
+        confirm_info = inDataBase(user_email, user_password)
         # checks to see if the info user provided is in the data base, returns a bollean
         if(confirm_Info): 
             # need to code for in database
-            return render_template('home.html', user_name = user_name, user_password=user_password)
+            return render_template('home.html', user_email = user_email, user_password=user_password)
         else:
             return ("Please re-enter your infomation")
     else:
