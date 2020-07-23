@@ -104,3 +104,7 @@ def resourcesPage():
 def profilePage():
     return render_template('profilePage.html')
 
+
+@app.route('/art_Meme')
+def art_Meme():
+    return render_template('art_Meme.html')
