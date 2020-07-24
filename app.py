@@ -83,6 +83,7 @@ def signIn():
 def add():
     # connect to the database
     collection = mongo.db.user_info
+    # user_info = collection.find({})
     collection.insert({"user_email":"james2@gmail.com", "user_password": "password"})
     # insert new data
     # return a message to the user
@@ -108,3 +109,4 @@ def profilePage():
 @app.route('/art_Meme')
 def art_Meme():
     return render_template('art_Meme.html')
+
