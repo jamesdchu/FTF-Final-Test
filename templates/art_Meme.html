@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <link rel="stylesheet" href="../static/css/styleWelcome.css"> -->
+<link rel="stylesheet" href="../static/css/styleSignIn.css">
 
 
+<title>Upperline Alumni Network</title>
+<!-- edit import style sheet for respective pages -->
 <style>
 body {
   margin: 0;
@@ -40,15 +44,88 @@ body {
 
 <div class="topnav">
   <a href="welcomePage">Welcome</a>
-  <a  href='https://www.upperlinecode.com/about'>About Upperline</a>
+  <a href='https://www.upperlinecode.com/about'>About Upperline</a>
   <a href='https://www.upperlinecode.com/about#teachwithus'>Work With Us</a>
   <a href='https://www.upperlinecode.com/contactUs'>Contact Us</a>
   <a class="active" href=art_Meme> UpperLine Art & Memes</a>
-  <a href="signIn">Log In</a>
-  <a href="signUp">Sign Up</a>
+  <a onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</a>
+  <a onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Sign Up</a>
+
 </div>
 
+
 <body>
+
+    <!-- sign in pop up -->
+<div id="id01" class="modal">
+  <form class="modal-content animate" action="/homePage" method="post">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="img_avatar2.png" alt="Avatar" class="avatar">
+    </div>
+
+    <div class="container">
+      <label for="user_email"><b>Email</b></label>
+      <input type="text" placeholder="Enter Email" name="user_email" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="password" required>
+        
+      <button type="submit">Login</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+      <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+  </form>
+</div>
+
+
+<!-- sign up pop up -->
+<div id="id02" class="modal">
+  <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+  <form method="POST" class="modal-content" action="/signUp">
+    <div class="container">
+      <h1>Sign Up</h1> 
+      <hr>
+    <label for="name"><b>Name</b></label>
+    <input type="text" placeholder="Enter Name" name="user_name" required>
+
+    <label for="interest"><b>Interest</b></label>
+    <input type="text" placeholder="Enter Your Interest" name="user_interest" required>
+
+    <label for="education"><b>Education</b></label>
+    <input type="text" placeholder="Enter School Last Attended" name="user_education" required>
+
+    <label for="headline"><b>Headline</b></label>
+    <input type="text" placeholder="Enter Current Role ex)Student or Actuary" name="user_headline" required>
+
+      <label for="email"><b>Email</b></label>
+      <input type="text" placeholder="Enter Email" name="user_email" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+
+      <label for="psw-repeat"><b>Repeat Password</b></label>
+      <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+      
+      <label>
+        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
+      </label>
+
+      <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+
+      <div class="clearfix">
+        <button type="submit" class="signupbtn">Sign Up</button>
+        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>
 
 <div class = "container">
     <div class = "row text-center">
@@ -56,17 +133,20 @@ body {
         <h1>Welcome to the UpperLine Alumini Network Art and Memes!!</h1>
         <p> Here you can find other Arts and Memes during our time together!!</p>
         </div>
-    </div>
+</div>
 
     <div class = "row justify-content-center">
 <img class = "mb-5" src="https://files.slack.com/files-pri/T015TDL95UY-F017MP1S9DZ/whiteboard_2_-01.png" alt="Art" width= "75%" height=auto  >
     </div>
+
     <div class = "row justify-content-center">
 <img class = "mb-5" src="https://files.slack.com/files-pri/T015TDL95UY-F017MP1NABV/whiteboard_1_-01.png" alt="Art" width= "75%" height=auto >
     </div>
+
     <div class = "row justify-content-center">
-<img src="https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Fi.imgflip.com%2F4936cj.jpg" alt="Art" width= "100%" height=auto >
+<img src="https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Fi.imgflip.com%2F4936cj.jpg" alt="Art" width= "50%" height=auto >
     </div>
+
     <div class = "row justify-content-center">
 
     </div>
