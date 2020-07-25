@@ -22,7 +22,7 @@ mongo = PyMongo(app)
 # -- Routes section --
 # INDEX
 
-# @app.route('/')
+@app.route('/')
 # @app.route('/index', methods= ["GET", "POST"])
 # def index():
 #     return render_template('index.html')
