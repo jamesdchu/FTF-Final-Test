@@ -22,10 +22,10 @@ mongo = PyMongo(app)
 # -- Routes section --
 # INDEX
 
-@app.route('/')
-# @app.route('/index')
+# @app.route('/')
+# @app.route('/index', methods= ["GET", "POST"])
 # def index():
-#     return render_template('index.html', events = events)
+#     return render_template('index.html')
 
 @app.route('/welcomePage', methods= ["GET", "POST"])
 def welcomePage():
@@ -57,10 +57,11 @@ def signUp():
             if not (user_password == user_password_repeat): 
                 return ("You entered different passwords, please try again!")
             #Adding new user to database
-            collection.insert({"user_email":user_email, "user_password": user_password, "user_interest": user_interest, "user_education": user_education, "user_headline": user_headline, "user_password_repeat":user_password_repeat})
-            return redirect(url_for('homePage'))
+            collection.insert({"user_name":user_name,"user_email":user_email, "user_password": user_password,"user_password_repeat":user_password_repeat, "user_interest": user_interest, "user_education": user_education, "user_headline": user_headline, })
+            # return redirect(url_for('homePage.html'))
+            return render_template('homePage.html')
         return 'That email already exists! Try logging in.'
-    return render_template('signup.html')
+    return render_template('signUp.html')
 
 @app.route('/signIn', methods= ["GET", "POST"])
 def signIn():
@@ -72,10 +73,15 @@ def signIn():
         ##Connecting to database
         collection = mongo.db.user_info      
         # checks to see if the info user provided is in the data base 
-        login_user = users.find_one({'user_email' : user_email}) 
-        if login_user: 
-            if user_password == login_user['password']:
-                return "Logged in!"
+        login_user = collection.find_one({'user_email' : user_email})
+        login_userPW = collection.find_one({'user_password' : user_password})
+        #Checking to see if email in database
+        if login_user is None: 
+            return ("It seems like you do not have an account, please type your email correctly or sign up!")
+        elif user_password != login_userPW or login_userPW is None:
+            return "Incorrect password, please try again!"
+        elif (user_email == login_user) and (user_password == login_userPW): 
+            return render_template('homePage.html')
         return 'Invalid combination!'
 
 @app.route('/add')
@@ -84,7 +90,7 @@ def add():
     # connect to the database
     collection = mongo.db.user_info
     # user_info = collection.find({})
-    collection.insert({"user_email":"james2@gmail.com", "user_password": "password"})
+    collection.insert({'user_name': user_name, "user_email":"james2@gmail.com", "user_password": "password"})
     # insert new data
     # return a message to the user
     return "Done!"
