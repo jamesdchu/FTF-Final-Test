@@ -33,7 +33,11 @@ def welcomePage():
 
 @app.route('/homePage', methods= ["GET", "POST"])
 def homePage():
-    return render_template('homePage.html')
+    updates = mongo.db.updates
+    updatesData = updates.find({})
+    ads = mongo.db.ads
+    adsData = ads.find({})
+    return render_template('homePage.html', updatesData = updatesData, adsData = adsData)
 
 @app.route('/signUp', methods= ["GET", "POST"])
 def signUp():
@@ -88,6 +92,7 @@ def signIn():
 
 def add():
     # connect to the database
+    user_email = request.form["user_email"] 
     collection = mongo.db.user_info
     # user_info = collection.find({})
     collection.insert({'user_name': "jameschu", "user_email":"james2@gmail.com", "user_password": "password"})
@@ -111,8 +116,30 @@ def resourcesPage():
 def profilePage():
     return render_template('profilePage.html')
 
-
 @app.route('/art_Meme')
 def art_Meme():
     return render_template('art_Meme.html')
 
+@app.route('/addAds', methods= ["GET", "POST"])
+def addAds():
+    # connect to the database
+    advertisementImage = request.form["adUrl"] 
+    ads = mongo.db.ads
+    adsData = ads.find({})
+    # insert new ads image url so that can use for html
+    ads.insert({'advertisementImage': advertisementImage})
+    # return a message to the user
+    return render_template('homePage.html', adsData = adsData)
+
+@app.route('/addUpdate', methods= ["GET", "POST"])
+def addUpdate():
+    # connect to the database
+    update_heading = request.form["update_heading"]
+    update_text = request.form["update_text"] 
+    update_link = request.form["update_link"] 
+    updates = mongo.db.updates
+    updatesData = updates.find({})
+    # insert new ads image url so that can use for html
+    updates.insert({'update_heading': update_heading, 'update_text': update_text, 'update_link': update_link })
+    # return a message to the user
+    return render_template('homePage.html', updatesData = updatesData)

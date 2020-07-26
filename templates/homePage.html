@@ -65,66 +65,76 @@ body {
 <div class="container-fluid text-center">    
   <div class="row content">
     <div class="col-sm-2 sidenav mb-5">
+      <!-- TROUBLESHOOT how to fix link -->
+      {% for link in updates%}
+      <p><a href= str({{ link.update_link }}) > {{ link.update_heading }} </a></p>
+      {% endfor %}
+      <p><a href='https://www.upperlinecode.com/'>Upperline Website</a></p>
       <p><a href="https://tinyurl.com/FF-FTF">Finance Friday Document</a></p>
       <p><a href="https://tinyurl.com/FTF-GS-microfeedback">Microfeedback</a></p>
       <p><a href="#">Graduation Zoom Link</a></p>
       <p><a href="#">Link</a></p>
       <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
     </div>
     <br>
     <div class="col-sm-8 text-justify  "> 
-        <div class ="row ">
-            <div class ="col-12">
-    <h1>Finance Friday</h1> 
-            </div>
-        <div class ="col-12">
-    <p>Hi hi! The Finance Friday Schedule & Resources doc has been updated 
-    with this week's schedule. Reminder to read through the schedule and check 
-    out our upcoming presenters. You'll see in the "Makerspace Workshop" section 
-    that there are the instructions on how to set up your Adafruit CPX devices. 
-    Please make sure to set up your device before Friday! As always, please give 
-    this post a (or another emoji of your choice) so that I know you've 
-    seen this post. Thank you! </p>
-        </div>
-    </div><hr>
-        <div class ="row ">
-            <div class ="col-12 ">
-        <h2> Microfeedback </h2>
-            </div>
-         <div class ="col-12">
-    <p>Please do not forget to fill out the microfeedback, your honest feedback is important to us</p> 
-        </div>
         <div class ="col-12 ">
-            <h3> Why does your feedback matter you may wonder?</h3>
+            <div class = "row justify-content-center">
+            <div class = 'row'>
+        <h2> Add An Update</h2>
+            </div>
+        <form class="modal-content animate" action="/addUpdate" method="post">
+        <div class = 'row'>
+            <div class ="col-6">
+        <label for="update_heading"><b>Update Title</b></label>
+        <input class="form-control mr-sm-2" type="text" placeholder="Enter Update Title" name="update_heading">
+            </div>
+            <div class ="col-6">
+        <label for="update_link"><b>Update Link</b></label>
+        <input class="form-control mr-sm-2" type="url" placeholder="Enter Update Link" name="update_link">
+            </div>
+        </div><br>
+            <label for="update_text"><b>Update Infomation</b></label>
+        <input class="form-control mr-md-2" type="text" placeholder="Enter Update Infomation" name="update_text" overflow ="scroll">
+        <br>
+        <button type="submit">Add Update</button>
+            </form>
         </div>
-         <div class ="col-12">
-            <p>Feedback promotes personal and professional growth. 
-            Feedback is about listening actively, taking the time to analyze, 
-            and then thinking of the best possible solution to perform better. 
-            It provides positive criticism and allows to see what everyone can 
-            change to improve their focus and results. </p>        
         </div>
-        </div><hr>
+            <hr>
+
+        {% for announcement in updatesData%}
         <div class ="row ">
             <div class ="col-12">
-    <h1>Graduation and Presentations</h1> 
+        <h1> {{ announcement.update_heading }} </h1> 
             </div>
-        <div class ="col-12">
-    <p>Good afternoon, </p>
-        </div>
-    </div><hr>
+            <div class ="col-12">
+        <p> {{ announcement.update_text }}</p>
+            </div>
+        </div><hr>
+        {% endfor %}
 
 </div>
         
     <div class="col-sm-2 sidenav">
-      <div class="well">
-        <p>ADS</p>
-      </div>
-      <div class="well">
-        <p>ADS</p>
-      </div>
+        <div class = "well">
+    <form class="modal-content animate" action="/addAds" method="post">
+        <input class="form-control mr-sm-2" type="url" placeholder="Enter Ad Image url" name="adUrl">
+        <button type="submit">Add Ad</button>
+    </form>
+        </div>
+        <br>
+    <div class="well">
+        <ul>
+         <!-- TROUBLESHOOT need to reverse that last comes first -->
+        {% for item in adsData %}
+        <img src= str({item.advertisementImage}) width="100%">
+        <br>
+        {% endfor %}
+        </ul>
     </div>
+      <br>
+  </div>
   
   </div>
 </div>
