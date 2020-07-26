@@ -33,10 +33,19 @@ def welcomePage():
 
 @app.route('/homePage', methods= ["GET", "POST"])
 def homePage():
-    updates = mongo.db.updates
-    updatesData = updates.find({})
-    ads = mongo.db.ads
-    adsData = ads.find({})
+    data_updates = mongo.db.updates
+    updates = data_updates.find({})
+    updatesData = []
+    for i in updates:
+        updatesData.append(i)
+    updatesData.reverse()
+    data_ads = mongo.db.ads
+    ads = data_ads.find({})
+    adsData = []
+    print(ads)
+    for i in ads:
+        adsData.append(i)
+    adsData.reverse()
     return render_template('homePage.html', updatesData = updatesData, adsData = adsData)
 
 @app.route('/signUp', methods= ["GET", "POST"])
@@ -116,18 +125,41 @@ def resourcesPage():
 def profilePage():
     return render_template('profilePage.html')
 
-@app.route('/art_Meme')
+@app.route('/artPage', methods= ["GET", "POST"])
+def artPage():
+    art_description = request.form["art_description"]
+    art_link = request.form["art_link"]
+    data_arts = mongo.db.arts
+    arts = data_arts.find({})
+    artsData = []
+    for i in arts:
+        artsData.append(i)
+    artsData.reverse()
+    data_arts.insert({'art_description': art_description, 'art_link': art_link})
+    return render_template('art_Meme.html', artsData = artsData)
+
+@app.route('/art_Meme', methods= ["GET", "POST"])
 def art_Meme():
-    return render_template('art_Meme.html')
+    data_arts = mongo.db.arts
+    arts = data_arts.find({})
+    artsData = []
+    for i in arts:
+        artsData.append(i)
+    artsData.reverse()
+    return render_template('art_Meme.html', artsData = artsData)
 
 @app.route('/addAds', methods= ["GET", "POST"])
 def addAds():
     # connect to the database
-    advertisementImage = request.form["adUrl"] 
-    ads = mongo.db.ads
-    adsData = ads.find({})
+    advertisementImage = request.form["adUrl"]
+    data_ads = mongo.db.ads
+    ads = data_ads.find({})
+    adsData = []
+    for i in ads:
+        adsData.append(i)
+    adsData.reverse()
     # insert new ads image url so that can use for html
-    ads.insert({'advertisementImage': advertisementImage})
+    data_ads.insert({'advertisementImage': advertisementImage})
     # return a message to the user
     return render_template('homePage.html', adsData = adsData)
 
@@ -137,9 +169,13 @@ def addUpdate():
     update_heading = request.form["update_heading"]
     update_text = request.form["update_text"] 
     update_link = request.form["update_link"] 
-    updates = mongo.db.updates
-    updatesData = updates.find({})
+    data_updates = mongo.db.updates
+    updates = data_updates.find({})
+    updatesData = []
+    for i in updates:
+        updatesData.append(i)
+    updatesData.reverse()
     # insert new ads image url so that can use for html
-    updates.insert({'update_heading': update_heading, 'update_text': update_text, 'update_link': update_link })
+    data_updates.insert({'update_heading': update_heading, 'update_text': update_text, 'update_link': update_link })
     # return a message to the user
     return render_template('homePage.html', updatesData = updatesData)

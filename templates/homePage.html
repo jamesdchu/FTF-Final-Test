@@ -66,15 +66,9 @@ body {
   <div class="row content">
     <div class="col-sm-2 sidenav mb-5">
       <!-- TROUBLESHOOT how to fix link -->
-      {% for link in updates%}
-      <p><a href= str({{ link.update_link }}) > {{ link.update_heading }} </a></p>
+      {% for item in updatesData %}
+      <p><a href= {{ item["update_link"] }} > {{ item["update_heading"] }} </a></p>
       {% endfor %}
-      <p><a href='https://www.upperlinecode.com/'>Upperline Website</a></p>
-      <p><a href="https://tinyurl.com/FF-FTF">Finance Friday Document</a></p>
-      <p><a href="https://tinyurl.com/FTF-GS-microfeedback">Microfeedback</a></p>
-      <p><a href="#">Graduation Zoom Link</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
     </div>
     <br>
     <div class="col-sm-8 text-justify  "> 
@@ -124,15 +118,11 @@ body {
     </form>
         </div>
         <br>
-    <div class="well">
-        <ul>
-         <!-- TROUBLESHOOT need to reverse that last comes first -->
         {% for item in adsData %}
-        <img src= str({item.advertisementImage}) width="100%">
-        <br>
+    <div class="well">
+        <img src= {{item["advertisementImage"]}} width="100%">
+    </div><br>
         {% endfor %}
-        </ul>
-    </div>
       <br>
   </div>
   
