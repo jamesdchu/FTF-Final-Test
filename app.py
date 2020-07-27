@@ -109,6 +109,7 @@ def signIn():
         elif user_password != login_user["user_password"]:
             return "Incorrect password, please try again!"
         elif (user_email == login_user["user_email"]) and (user_password == login_user["user_password"]): 
+            session["user_email"] = user_email
             return "Success! You have signed in! Go to the <a href='/homePage'> home page! </a>"
         return 'Invalid combination!'
 
@@ -147,6 +148,7 @@ def resourcesPage():
 
 @app.route('/profilePage', methods= ["GET", "POST"])
 def profilePage():
+    user
     return render_template('profilePage.html')
 
 @app.route('/artPage', methods= ["GET", "POST"])
