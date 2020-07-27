@@ -8,16 +8,20 @@ from flask import redirect, session, url_for
 from flask_pymongo import PyMongo
 import bcrypt
 import model
+import os
 
 # -- Initialization section --
 app = Flask(__name__)
 app.secret_key = "j324jbkfdsbjou932pbojnljnmsmdfnip932o"
 
+user = os.environ['user']
+pw = os.environ['pw']
+
 # name of database
 app.config['MONGO_DBNAME'] = 'users'
 
 # URI of database
-app.config['MONGO_URI'] = 'mongodb+srv://admin:8pcd0XmbvbLDNpCf@cluster0.6gvi8.mongodb.net/users?retryWrites=true&w=majority'
+app.config['MONGO_URI'] = f'mongodb+srv://{user}:{pw}@cluster0.6gvi8.mongodb.net/users?retryWrites=true&w=majority'
 
 mongo = PyMongo(app)
 
