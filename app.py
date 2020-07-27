@@ -148,8 +148,10 @@ def resourcesPage():
 
 @app.route('/profilePage', methods= ["GET", "POST"])
 def profilePage():
-    user
-    return render_template('profilePage.html')
+    users = mongo.db.user_info
+    email = session['user_email']
+    user = users.find({"user_email":email})
+    return render_template('profilePage.html', user=user)
 
 @app.route('/artPage', methods= ["GET", "POST"])
 def artPage():
