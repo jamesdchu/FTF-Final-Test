@@ -5,13 +5,17 @@ from flask import render_template
 from flask import request
 import bcrypt
 from flask import redirect, session, url_for
-# from bson.objectid import ObjectId
 from flask_pymongo import PyMongo
+import bcrypt
 import model
 
 # -- Initialization section --
 app = Flask(__name__)
+<<<<<<< HEAD
 app.secret_key = "j324jbkfdsbjou932pbojnljnmsmdfnip932o"
+=======
+app.secret_key = 'mo3m4o35mipmpMM3i'
+>>>>>>> f51e23814899b8310e90abc872db74ff2f1b6470
 
 # name of database
 app.config['MONGO_DBNAME'] = 'users'
@@ -83,7 +87,8 @@ def signUp():
             user_password,"user_password_repeat":user_password_repeat, "user_interest": user_interest, 
             "user_education": user_education, "user_headline": user_headline, 'user_linkedin': user_linkedin })
             # return redirect(url_for('homePage.html'))
-            return render_template('homePage.html', existing_user = existing_user, user_infoData = user_infoData)
+            session["user_email"] = user_email
+            return render_template('homePage.html', user_infoData = user_infoData)
         return 'That email already exists! Try logging in.'
     return render_template('signUp.html')
 
@@ -92,38 +97,23 @@ def signIn():
     if request.method=="GET":
         return render_template('signIn.html')
     else:
-        user_email = request.form["user_email"] 
+        user_email = request.form["user_email"]
         user_password = request.form["password"]
         ##Connecting to database
-        collection = mongo.db.user_info
-        user = list(collection.find({"user_email":user_email}))
-        password = user[0]["password"]
-
-        if len(user) == 1 
-            if user_password == bcrypt.hashpw(password.encode('utf-8'), user[0]['password'].encode('utf-8')) == user[0]['password'].encode('utf-8'):
-            # collection.insert_one({"user_email": user_email, "user_password": str(bcrypt.hashpw(user_password.encode("utf-8"), bcrypt.gensalt()), 'utf-8')})
-            session["user_email"] = user_email
-            return "You are logged in.  Go to <a href='/homePage'>home</a>."
-        # elif password == user[0]["password"]:
-        elif bcrypt.hashpw(password.encode('utf-8'), user[0]['password'].encode('utf-8')) == user[0]['password'].encode('utf-8'):
-            session["user_email"] = user_email
-            return render_template('homePage.html')
-            # return "You are logged in.  Go to <a href='/index'>home</a>."
-        else:
-            return "Error"
-        session["username"] = username
-        # mimic session
-        return render_template('loginsignup.html')    
-        # checks to see if the info user provided is in the data base 
-        login_user = collection.find_one({'user_email' : user_email})
-        login_userPW = collection.find_one({'user_password' : user_password})
+        data_user_info = mongo.db.user_info
+        user_info = data_user_info.find({})
+        user_infoData = []
+        for i in user_info:
+            user_infoData.append(i)
         #Checking to see if email in database
+        login_user = data_user_info.find_one({'user_email' : user_email})
+        print(login_user)
         if login_user is None: 
             return ("It seems like you do not have an account, please type your email correctly or sign up!")
-        elif user_password != login_userPW or login_userPW is None:
+        elif user_password != login_user["user_password"]:
             return "Incorrect password, please try again!"
-        elif (user_email == login_user) and (user_password == login_userPW): 
-            return render_template('homePage.html')
+        elif (user_email == login_user["user_email"]) and (user_password == login_user["user_password"]): 
+            return "Success! You have signed in! Go to the <a href='/homePage'> home page! </a>"
         return 'Invalid combination!'
 
 @app.route('/add')
@@ -203,18 +193,21 @@ def addAds():
 
 @app.route('/addUpdate', methods= ["GET", "POST"])
 def addUpdate():
-    # connect to the database
-    update_heading = request.form["update_heading"]
-    update_messenger = request.form["update_messenger"]
-    update_text = request.form["update_text"] 
-    update_link = request.form["update_link"] 
-    data_updates = mongo.db.updates
-    updates = data_updates.find({})
-    updatesData = []
-    for i in updates:
-        updatesData.append(i)
-    updatesData.reverse()
-    # insert new ads image url so that can use for html
-    data_updates.insert({'update_heading': update_heading, 'update_text': update_text, 'update_link': update_link, 'update_messenger':update_messenger })
-    # return a message to the user
-    return render_template('homePage.html', updatesData = updatesData)
+    if request.method == "POST":
+        # connect to the database
+        update_heading = request.form["update_heading"]
+        update_messenger = request.form["update_messenger"]
+        update_text = request.form["update_text"] 
+        update_link = request.form["update_link"] 
+        data_updates = mongo.db.updates
+        updates = data_updates.find({})
+        updatesData = []
+        for i in updates:
+            updatesData.append(i)
+        updatesData.reverse()
+        # insert new ads image url so that can use for html
+        data_updates.insert({'update_heading': update_heading, 'update_text': update_text, 'update_link': update_link, 'update_messenger':update_messenger })
+        # return a message to the user
+        return render_template('homePage.html', updatesData = updatesData)
+    else:
+        return render_template('addUpdate.html')

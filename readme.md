@@ -1,3 +1,3 @@
-# Flask + MongoDB Template
+# FinTech Focus Final Project - UpperLine Code Alumni Network
 
-Clone this repository to get started building a Flask app with a MongoDB database.
+This project was
