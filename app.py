@@ -89,20 +89,23 @@ def signIn():
     if request.method=="GET":
         return render_template('signIn.html')
     else:
-        user_email = request.form["user_email"] 
+        user_email = request.form["user_email"]
         user_password = request.form["password"]
         ##Connecting to database
-        collection = mongo.db.user_info      
-        # checks to see if the info user provided is in the data base 
-        login_user = collection.find_one({'user_email' : user_email})
-        login_userPW = collection.find_one({'user_password' : user_password})
+        data_user_info = mongo.db.user_info
+        user_info = data_user_info.find({})
+        user_infoData = []
+        for i in user_info:
+            user_infoData.append(i)
         #Checking to see if email in database
+        login_user = data_user_info.find_one({'user_email' : user_email})
+        print(login_user)
         if login_user is None: 
             return ("It seems like you do not have an account, please type your email correctly or sign up!")
-        elif user_password != login_userPW or login_userPW is None:
+        elif user_password != login_user["user_password"]:
             return "Incorrect password, please try again!"
-        elif (user_email == login_user) and (user_password == login_userPW): 
-            return render_template('homePage.html')
+        elif (user_email == login_user["user_email"]) and (user_password == login_user["user_password"]): 
+            return "Success! You have signed in! Go to the <a href='/homePage'> home page! </a>"
         return 'Invalid combination!'
 
 @app.route('/add')
