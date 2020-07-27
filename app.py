@@ -11,11 +11,7 @@ import model
 
 # -- Initialization section --
 app = Flask(__name__)
-<<<<<<< HEAD
 app.secret_key = "j324jbkfdsbjou932pbojnljnmsmdfnip932o"
-=======
-app.secret_key = 'mo3m4o35mipmpMM3i'
->>>>>>> f51e23814899b8310e90abc872db74ff2f1b6470
 
 # name of database
 app.config['MONGO_DBNAME'] = 'users'
