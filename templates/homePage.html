@@ -79,20 +79,30 @@ body {
         <h2> Add An Update</h2>
             </div>
         <form class="modal-content animate" action="/addUpdate" method="post">
-        <div class = 'row'>
+        <br><div class = 'row'>
             <div class ="col-6">
         <label for="update_heading"><b>Update Title</b></label>
         <input class="form-control mr-sm-2" type="text" placeholder="Enter Update Title" name="update_heading">
             </div>
             <div class ="col-6">
-        <label for="update_link"><b>Update Link</b></label>
-        <input class="form-control mr-sm-2" type="url" placeholder="Enter Update Link" name="update_link">
+        <label for="update_messenger"><b>Update Messenger</b></label>
+        <input class="form-control mr-sm-2" type="text" placeholder="Enter Your Name" name="update_messenger">
             </div>
         </div><br>
-            <label for="update_text"><b>Update Infomation</b></label>
-        <input class="form-control mr-md-2" type="text" placeholder="Enter Update Infomation" name="update_text" overflow ="scroll">
-        <br>
-        <button type="submit">Add Update</button>
+ 
+            <div class = "row col">
+                <label for="update_text"><b>Update Infomation</b></label>
+            <textarea class="form-control mr-md-2" type="text" placeholder="Enter Update Infomation" name="update_text" overflow ="scroll"></textarea>
+            </div><br> 
+        <div class = "row">
+             <div class ="col-10">
+         <label for="update_link"><b>Update Link</b></label>
+         <input class="form-control mr-sm-2" type="url" placeholder="Enter Update Link" name="update_link">
+            </div>
+            <div class ="col-2"><br>
+         <button type="submit">Add Update</button>
+            </div>
+        </div>
             </form>
         </div>
         </div>
@@ -100,8 +110,8 @@ body {
 
         {% for announcement in updatesData%}
         <div class ="row ">
-            <div class ="col-12">
-        <h1> {{ announcement.update_heading }} </h1> 
+            <div class ="col-12 row">
+        <h1> <b> {{ announcement.update_heading }}</b> by {{ announcement.update_messenger }} </h1> 
             </div>
             <div class ="col-12">
         <p> {{ announcement.update_text }}</p>

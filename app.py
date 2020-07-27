@@ -59,20 +59,28 @@ def signUp():
         user_interest = request.form["user_interest"]
         user_education = request.form["user_education"]
         user_headline = request.form["user_headline"]
+        user_linkedin = request.form["user_linkedin"]
         user_email = request.form["user_email"]
         user_password = request.form["psw"]
         user_password_repeat = request.form["psw-repeat"]
         ##Checking if the email is already registered and connecting to database
-        collection = mongo.db.user_info
-        existing_user = collection.find_one({'user_email' : user_email})
+        data_user_info = mongo.db.user_info
+        user_info = data_user_info.find({})
+        user_infoData = []
+        for i in user_info:
+            user_infoData.append(i)
+        # user_infoData.sort("user_name")
+        existing_user = data_user_info.find_one({'user_email' : user_email})
         if existing_user is None: 
             #Checking that user entered same password
             if not (user_password == user_password_repeat): 
                 return ("You entered different passwords, please try again!")
             #Adding new user to database
-            collection.insert({"user_name":user_name,"user_email":user_email, "user_password": user_password,"user_password_repeat":user_password_repeat, "user_interest": user_interest, "user_education": user_education, "user_headline": user_headline, })
+            data_user_info.insert({"user_name":user_name,"user_email":user_email, "user_password": 
+            user_password,"user_password_repeat":user_password_repeat, "user_interest": user_interest, 
+            "user_education": user_education, "user_headline": user_headline, 'user_linkedin': user_linkedin })
             # return redirect(url_for('homePage.html'))
-            return render_template('homePage.html')
+            return render_template('homePage.html', existing_user = existing_user, user_infoData = user_infoData)
         return 'That email already exists! Try logging in.'
     return render_template('signUp.html')
 
@@ -112,6 +120,15 @@ def add():
 
 # @app.route('/signUp', methods = ["GET", "POST"])
 # def signUp():
+@app.route('/contactPage', methods= ["GET", "POST"])
+def contactPage():
+    data_user_info = mongo.db.user_info
+    user_info = data_user_info.find({})
+    user_infoData = []
+    for i in user_info:
+        user_infoData.append(i)
+    # user_infoData.sort()
+    return render_template('contactPage.html', user_infoData = user_infoData)
 
 @app.route('/discussionPage')#, methods= ["GET", "POST"])
 def discussionPage():
@@ -167,6 +184,7 @@ def addAds():
 def addUpdate():
     # connect to the database
     update_heading = request.form["update_heading"]
+    update_messenger = request.form["update_messenger"]
     update_text = request.form["update_text"] 
     update_link = request.form["update_link"] 
     data_updates = mongo.db.updates
@@ -176,6 +194,6 @@ def addUpdate():
         updatesData.append(i)
     updatesData.reverse()
     # insert new ads image url so that can use for html
-    data_updates.insert({'update_heading': update_heading, 'update_text': update_text, 'update_link': update_link })
+    data_updates.insert({'update_heading': update_heading, 'update_text': update_text, 'update_link': update_link, 'update_messenger':update_messenger })
     # return a message to the user
     return render_template('homePage.html', updatesData = updatesData)

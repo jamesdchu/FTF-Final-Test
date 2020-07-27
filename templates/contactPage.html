@@ -4,9 +4,9 @@
 <link type="image/png" rel="icon" href="https://media-exp1.licdn.com/dms/image/C4E0BAQE6lQtEKdA5dw/company-logo_200_200/0?e=2159024400&v=beta&t=UeYB5MUD2arx7SRkE4rd9FU-2dMIJAq83Ne8RonjrwE">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- <link rel="stylesheet" href="../static/css/styleWelcome.css"> -->
+<link rel="stylesheet" href="../static/css/styleContact.css">
 <!-- <link rel="stylesheet" href="../static/css/styleSignIn.css"> -->
-<title>Upperline Alumni Network</title>
+<title>Alumni Network Contact</title>
 <!-- edit import style sheet for respective pages -->
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
@@ -158,7 +158,7 @@ body {
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand active" href="welcomePage">Welcome <span class="sr-only">(current)</span> </a>
+  <a class="navbar-brand nav-link" href="welcomePage">Welcome <span class="sr-only">(current)</span> </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -172,7 +172,7 @@ body {
         <a class="nav-link" href='https://www.upperlinecode.com/about#teachwithus'>Work With Us</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href='/contactPage'>Contact Us</a>
+        <a class="navbar-brand active nav-link" href='/contactPage'>Contact Us</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" onclick="document.getElementById('id01').style.display='block'" style="width:auto;" >Login</a>
@@ -180,17 +180,6 @@ body {
       <li class="nav-item">
         <a class="nav-link" onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Sign Up</a>
       </li>
-      <!-- <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li> -->
     </ul>
 
 
@@ -283,36 +272,57 @@ body {
 </div>
 
 
-<div class = "container" >
+    <div class = "container-fluid" >
 
-    <div class ="row text-center">
-        <div class ="col" >
-        <h1>Welcome to the UpperLine Alumini Network!</h1>
-        <p> Here you can find other upperline alumni's, resources and many more!</p>
+        <div class ="row text-center">
+            <div class ="col" >
+            <h1>Need to Contact the Alumini Network Team?</h1>
+            <h3> Reach out by entering your infomation below or simple messaging any of the creators on Linkedin!</h3>
+            </div>
+            
         </div>
+<br>
+<div class="container">
+  <div style="text-align:center">
+    <h2>Contact Us</h2>
+    <h4>Swing by for a cup of coffee, or leave us a message:</h4>
+  </div>
+  <div class="row">
+    <div class="column">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSQ5wqjFt5ZhI0a3-UFRHLNIA0OVJ70m22lfQ&usqp=CAU" style="width:100%">
+    
+    <div style="text-align:center">
+        <br> <br>
+    <h2>Feel free to also connect with us on Linkedin!</h2>
+    <h3><a href='https://www.linkedin.com/in/aaron-amankwaah-76b10a196/'>Aaron Amankwaah</a></h3> 
+    <h3><a href='https://www.linkedin.com/in/jamesdchu/'>James Chu</a></h3>
     </div>
-
-    <h3 style="text-align: center" > Goldman Sachs Cohort </h3>
-    <div class ="row text-center">
-    <img class = "mb-5" src="https://files.slack.com/files-pri/T015TDL95UY-F017MJW9S2W/image__1_.png" alt= "Goldman Sachs Cohort" width= "100%" height="auto" >
     </div>
-
-    <h3 style="text-align: center" > JP Morgan Cohort </h3>
-    <div class ="row text-center">
-    <img class = "mb-5" src="" alt="JP Morgan Cohort" width= "100%" height="auto" >
+    <div class="column">
+      <form action="/welcomePage">
+        <label for="fname">First Name</label>
+        <input type="text" id="fname" name="firstname" placeholder="Your name..">
+        <label for="lname">Last Name</label>
+        <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+        <label for="country">State</label>
+        <select id="country" name="state">
+          <option value="none">--Select--</option>
+          <option value="australia">CA</option>
+          <option value="canada">NJ</option>
+          <option value="usa">NY</option>
+        </select>
+        <label for="subject">Subject</label>
+        <textarea id="subject" name="subject" placeholder="Write something.." style="height:170px"></textarea>
+        <input type="submit" value="Submit">
+      </form>
     </div>
-
-    <h3 style="text-align: center" > Bank Of America Cohort </h3>
-    <div class ="row text-center">
-    <img class = "mb-5" src="" alt="Bank Of America Cohort" width= "100%" height="auto" >
-    </div>
-
-    <h3 style="text-align: center" > Wells Fargo Cohort </h3>
-    <div class ="row text-center">
-    <img class = "mb-5" src="" alt="Wells Fargo Cohort" width= "100%" height="auto" >
-    </div>
-
+  </div>
 </div>
+    
+
+
+    </div>
+
 </body>
 </html>
 
