@@ -3,6 +3,7 @@
 from flask import Flask
 from flask import render_template
 from flask import request
+import bcrypt
 from flask import redirect, session, url_for
 # from bson.objectid import ObjectId
 from flask_pymongo import PyMongo
@@ -10,6 +11,7 @@ import model
 
 # -- Initialization section --
 app = Flask(__name__)
+app.secret_key = "j324jbkfdsbjou932pbojnljnmsmdfnip932o"
 
 # name of database
 app.config['MONGO_DBNAME'] = 'users'
@@ -29,6 +31,7 @@ mongo = PyMongo(app)
 
 @app.route('/welcomePage', methods= ["GET", "POST"])
 def welcomePage():
+    session.clear()
     return render_template('welcomePage.html')
 
 @app.route('/homePage', methods= ["GET", "POST"])
@@ -92,7 +95,25 @@ def signIn():
         user_email = request.form["user_email"] 
         user_password = request.form["password"]
         ##Connecting to database
-        collection = mongo.db.user_info      
+        collection = mongo.db.user_info
+        user = list(collection.find({"user_email":user_email}))
+        password = user[0]["password"]
+
+        if len(user) == 1 
+            if user_password == bcrypt.hashpw(password.encode('utf-8'), user[0]['password'].encode('utf-8')) == user[0]['password'].encode('utf-8'):
+            # collection.insert_one({"user_email": user_email, "user_password": str(bcrypt.hashpw(user_password.encode("utf-8"), bcrypt.gensalt()), 'utf-8')})
+            session["user_email"] = user_email
+            return "You are logged in.  Go to <a href='/homePage'>home</a>."
+        # elif password == user[0]["password"]:
+        elif bcrypt.hashpw(password.encode('utf-8'), user[0]['password'].encode('utf-8')) == user[0]['password'].encode('utf-8'):
+            session["user_email"] = user_email
+            return render_template('homePage.html')
+            # return "You are logged in.  Go to <a href='/index'>home</a>."
+        else:
+            return "Error"
+        session["username"] = username
+        # mimic session
+        return render_template('loginsignup.html')    
         # checks to see if the info user provided is in the data base 
         login_user = collection.find_one({'user_email' : user_email})
         login_userPW = collection.find_one({'user_password' : user_password})
