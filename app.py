@@ -174,18 +174,21 @@ def art_Meme():
 
 @app.route('/addAds', methods= ["GET", "POST"])
 def addAds():
+    if request.method == "POST":
     # connect to the database
-    advertisementImage = request.form["adUrl"]
-    data_ads = mongo.db.ads
-    ads = data_ads.find({})
-    adsData = []
-    for i in ads:
-        adsData.append(i)
-    adsData.reverse()
-    # insert new ads image url so that can use for html
-    data_ads.insert({'advertisementImage': advertisementImage})
-    # return a message to the user
-    return render_template('homePage.html', adsData = adsData)
+        advertisementImage = request.form["adUrl"]
+        data_ads = mongo.db.ads
+        ads = data_ads.find({})
+        adsData = []
+        for i in ads:
+            adsData.append(i)
+        adsData.reverse()
+        # insert new ads image url so that can use for html
+        data_ads.insert({'advertisementImage': advertisementImage})
+        # return a message to the user
+        return "You have succesfully added an advertisement, please go to <a href ='/homePage'>  home page </a> to see it displayed."
+    else: 
+        return render_template('addAds.html')
 
 @app.route('/addUpdate', methods= ["GET", "POST"])
 def addUpdate():

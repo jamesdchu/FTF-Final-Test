@@ -84,7 +84,7 @@ body {
 
         {% for announcement in updatesData%}
         <div class ="row ">
-            <div class ="col-12 row">
+            <div class ="col-12 ">
         <h1> <b> {{ announcement.update_heading }}</b> by {{ announcement.update_messenger }} </h1> 
             </div>
             <div class ="col-12">
@@ -96,12 +96,6 @@ body {
 </div>
         
     <div class="col-sm-2 sidenav">
-        <div class = "well">
-    <form class="modal-content animate" action="/addAds" method="post">
-        <input class="form-control mr-sm-2" type="url" placeholder="Enter Ad Image url" name="adUrl">
-        <button type="submit">Add Ad</button>
-    </form>
-        </div>
         <br>
         {% for item in adsData %}
     <div class="well">
@@ -109,6 +103,7 @@ body {
     </div><br>
         {% endfor %}
       <br>
+    <h4> <a href="/addAds"> Advertise your content </a> </h4>
   </div>
   
   </div>
