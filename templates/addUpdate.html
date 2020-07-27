@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link type="image/png" rel="icon" href="https://media-exp1.licdn.com/dms/image/C4E0BAQE6lQtEKdA5dw/company-logo_200_200/0?e=2159024400&v=beta&t=UeYB5MUD2arx7SRkE4rd9FU-2dMIJAq83Ne8RonjrwE">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../static/css/styleHome.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<title>Alumni Network</title>
+</head>
+<body>
+<!-- edit import style sheet for respective pages -->
+    <div class="col-sm-8 text-justify  "> 
+        <div class ="col-12 ">
+            <div class = "row justify-content-center">
+            <div class = 'row'>
+        <h2> Add An Update</h2>
+            </div>
+        <form class="modal-content animate" action="/addUpdate" method="post">
+        <br><div class = 'row'>
+            <div class ="col-6">
+        <label for="update_heading"><b>Update Title</b></label>
+        <input class="form-control mr-sm-2" type="text" placeholder="Enter Update Title" name="update_heading">
+            </div>
+            <div class ="col-6">
+        <label for="update_messenger"><b>Update Messenger</b></label>
+        <input class="form-control mr-sm-2" type="text" placeholder="Enter Your Name" name="update_messenger">
+            </div>
+        </div><br>
+ 
+            <div class = "row col">
+                <label for="update_text"><b>Update Infomation</b></label>
+            <textarea class="form-control mr-md-2" type="text" placeholder="Enter Update Infomation" name="update_text" overflow ="scroll"></textarea>
+            </div><br> 
+        <div class = "row">
+             <div class ="col-10">
+         <label for="update_link"><b>Update Link</b></label>
+         <input class="form-control mr-sm-2" type="url" placeholder="Enter Update Link" name="update_link">
+            </div>
+            <div class ="col-2"><br>
+         <button type="submit">Add Update</button>
+            </div>
+        </div>
+            </form>
+        </div>
+        </div>
+
+</body>
+</html>

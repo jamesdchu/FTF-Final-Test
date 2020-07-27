@@ -4,12 +4,13 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from flask import redirect, session, url_for
-# from bson.objectid import ObjectId
 from flask_pymongo import PyMongo
+import bcrypt
 import model
 
 # -- Initialization section --
 app = Flask(__name__)
+app.secret_key = 'mo3m4o35mipmpMM3i'
 
 # name of database
 app.config['MONGO_DBNAME'] = 'users'
@@ -80,7 +81,8 @@ def signUp():
             user_password,"user_password_repeat":user_password_repeat, "user_interest": user_interest, 
             "user_education": user_education, "user_headline": user_headline, 'user_linkedin': user_linkedin })
             # return redirect(url_for('homePage.html'))
-            return render_template('homePage.html', existing_user = existing_user, user_infoData = user_infoData)
+            session["user_email"] = user_email
+            return render_template('homePage.html', user_infoData = user_infoData)
         return 'That email already exists! Try logging in.'
     return render_template('signUp.html')
 
@@ -185,18 +187,21 @@ def addAds():
 
 @app.route('/addUpdate', methods= ["GET", "POST"])
 def addUpdate():
-    # connect to the database
-    update_heading = request.form["update_heading"]
-    update_messenger = request.form["update_messenger"]
-    update_text = request.form["update_text"] 
-    update_link = request.form["update_link"] 
-    data_updates = mongo.db.updates
-    updates = data_updates.find({})
-    updatesData = []
-    for i in updates:
-        updatesData.append(i)
-    updatesData.reverse()
-    # insert new ads image url so that can use for html
-    data_updates.insert({'update_heading': update_heading, 'update_text': update_text, 'update_link': update_link, 'update_messenger':update_messenger })
-    # return a message to the user
-    return render_template('homePage.html', updatesData = updatesData)
+    if request.method == "POST":
+        # connect to the database
+        update_heading = request.form["update_heading"]
+        update_messenger = request.form["update_messenger"]
+        update_text = request.form["update_text"] 
+        update_link = request.form["update_link"] 
+        data_updates = mongo.db.updates
+        updates = data_updates.find({})
+        updatesData = []
+        for i in updates:
+            updatesData.append(i)
+        updatesData.reverse()
+        # insert new ads image url so that can use for html
+        data_updates.insert({'update_heading': update_heading, 'update_text': update_text, 'update_link': update_link, 'update_messenger':update_messenger })
+        # return a message to the user
+        return render_template('homePage.html', updatesData = updatesData)
+    else:
+        return render_template('addUpdate.html')
